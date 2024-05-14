@@ -15,7 +15,9 @@ export default (app) => {
 
   app.on("pull_request.opened", async (context) => {
     let { reviewers } = await context.config("auto_assign.yml");
-    reviewers = reviewers.filter((reviewer) => reviewer !== "manaswinidas");
+    reviewers = reviewers.filter(
+      (reviewer) => reviewer !== context.payload.sender.login
+    );
 
     const params = context.pullRequest({ reviewers });
 
